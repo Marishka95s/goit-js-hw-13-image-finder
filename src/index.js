@@ -18,7 +18,7 @@ function onInputChange(){
     let searchQuery = inputEl.value;
     console.log('input changed');
     resultsContainer.innerHTML = '';
-    if (inputEl.value !== '' && El.value !== ' ' && inputEl.value !== '.'){
+    if (inputEl.value !== '' && inputEl.value !== ' ' && inputEl.value !== '.'){
         console.log(searchQuery);
         fetchPictures(searchQuery).then(data => {
             if (data.status === 404) {
