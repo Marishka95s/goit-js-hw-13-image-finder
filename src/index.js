@@ -34,7 +34,13 @@ function onInputChange(){
         picturesApiService.resetPage();
         clearPicturesContainer();
         fetchPictures();
-}}
+    } else {
+        error({
+            title: "Empty query. Try to type something",
+            delay: 1500,
+          });
+    }
+}
 
 function fetchPictures() {
     loadMoreBtn.disable();
