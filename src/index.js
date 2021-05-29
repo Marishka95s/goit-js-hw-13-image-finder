@@ -11,7 +11,7 @@ import {error} from '@pnotify/core/dist/PNotify.js';
 
 import './styles.css';
 
-// Функціонал виконання пошуку
+// Основний функціонал
 const loadMoreBtn = new LoadMoreBtn({
     selector: '[data-action="load-more"]',
     hidden: true,
