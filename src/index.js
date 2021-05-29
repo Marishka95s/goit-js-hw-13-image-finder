@@ -1,6 +1,7 @@
 var debounce = require('lodash.debounce');
-import fetchPictures from './apiService';
-import galleryTpl from './galleryTpl.hbs';
+import PicturesApiService from './components/apiService';
+import galleryTpl from './templates/galleryTpl.hbs';
+import LoadMoreBtn from './components/load-more-btn';
 
 // import pontyfy styles and js
 import '@pnotify/core/dist/BrightTheme.css';
@@ -10,40 +11,47 @@ import {error} from '@pnotify/core/dist/PNotify.js';
 
 import './styles.css';
 
+// Функціонал виконання пошуку
+const loadMoreBtn = new LoadMoreBtn({
+    selector: '[data-action="load-more"]',
+    hidden: true,
+  });
+
+
 const resultsContainer = document.querySelector('.js-gallery');
 const inputEl = document.querySelector('input');
 inputEl.addEventListener('input', debounce(onInputChange, 500));
+loadMoreBtn.refs.button.addEventListener('click', fetchPictures);
+
+const picturesApiService = new PicturesApiService();
 
 function onInputChange(){
-    let searchQuery = inputEl.value;
+    picturesApiService.query = inputEl.value;
     console.log('input changed');
-    resultsContainer.innerHTML = '';
+
     if (inputEl.value !== '' && inputEl.value !== ' ' && inputEl.value !== '.'){
-        console.log(searchQuery);
-        fetchPictures(searchQuery).then(data => {
-            if (data.status === 404) {
-                pnotyfyMassage('Nothing was found for your query!');
-            }
-            console.log(data);
-            const resultsMarkup = createSearchItemsMarkup(data);
-            resultsContainer.insertAdjacentHTML('beforeend', resultsMarkup);
-        });
+        loadMoreBtn.show();
+        picturesApiService.resetPage();
+        clearPicturesContainer();
+        fetchPictures();
 }}
 
-function createSearchItemsMarkup(data) {
-    console.log(data);
-    return galleryTpl(data);
+function fetchPictures() {
+    loadMoreBtn.disable();
+    picturesApiService.fetchPictures().then(data => {
+        appendPicturesMarkup(data);
+        loadMoreBtn.enable();
+    })
+}
+function appendPicturesMarkup(data) {
+    resultsContainer.insertAdjacentHTML('beforeend', galleryTpl(data));
 }
 
-function pnotyfyMassage(message) {
-    error ({
-            title: `${message}`,
-            delay: 1200,
-        });
+function clearPicturesContainer() {
+    resultsContainer.innerHTML = '';
 }
 
-
-// Додатковий функціонал
+// Додатковий функціонал відкриття модального вікна
 // Не дороблено: 3. Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
 
 const galleryContainer = document.querySelector('.js-gallery');
