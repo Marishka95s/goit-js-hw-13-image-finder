@@ -21,7 +21,7 @@
     /*
      * CSS image reference example.
      */
-    /* background-image: url('./images/bg-pattern.png');
+    /* 
   } */
   
   
@@ -33,7 +33,7 @@
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
       Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-    background-color: #fff;
+    background-image: url('./images/bg-pattern.png');
     color: #212121;
   }
   h1 {
@@ -48,6 +48,7 @@
     border: 1px solid;
     border-radius: 3px;
   }
+  
   .gallery {
     display: grid;
     width: 1200px;
@@ -66,7 +67,7 @@
       0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
   }
   
-  .gallery__image:hover {
+  .gallery__image:hover, .stats-item:hover {
     transform: scale(1.03);
     border-radius: 3px;
   } 
@@ -108,7 +109,7 @@
   }
   
   /* Lightbox */
-  /* .lightbox {
+  .lightbox {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -171,7 +172,7 @@
     cursor: pointer;
     transition: background-color var(--animation-duration) var(--timing-function);
     outline: none;
-    background-image: url('../images/icon-close.svg');
+    background-image: url('./images/icon-close.svg');
     background-position: center;
     background-size: 60%;
     background-repeat: no-repeat;
@@ -180,4 +181,10 @@
   .lightbox__button:hover,
   .lightbox__button:focus {
     background-color: rgba(0, 0, 0, 0.5);
-  } */
+  }
+
+  .loadmore__button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
