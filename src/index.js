@@ -41,8 +41,10 @@ function fetchPictures() {
     picturesApiService.fetchPictures().then(data => {
         appendPicturesMarkup(data);
         loadMoreBtn.enable();
+        loadMoreBtn.refs.button.scrollIntoView({ behavior: 'smooth', block: 'end', });
     })
 }
+
 function appendPicturesMarkup(data) {
     resultsContainer.insertAdjacentHTML('beforeend', galleryTpl(data));
 }
